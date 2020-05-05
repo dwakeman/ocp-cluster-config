@@ -1,0 +1,9 @@
+- name: Install IBM Cloud Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'subscription.j2') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  

@@ -1,0 +1,3 @@
+operatorNamespace: dave-app
+managementNamespace: ico-management
+config_map_creator: "Dave Wakeman"

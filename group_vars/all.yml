@@ -1,0 +1,4 @@
+#COMMON OPENSHIFT CLUSTER ADDRESS
+#openshift_host: https://c100-e.us-south.containers.cloud.ibm.com:30919
+#TODO - move this into Ansible vault or env variables
+#openshift_api_key: <your key could go here>

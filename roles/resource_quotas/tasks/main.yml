@@ -1,0 +1,4 @@
+- name: Create resource quota definition using a static file (rather than a template)
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'resource_quota.yml') }}"

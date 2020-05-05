@@ -1,0 +1,25 @@
+kind: ImageStreamTag
+apiVersion: image.openshift.io/v1
+metadata:
+  name: APP:TAG
+  namespace: DESTINATION
+  creationTimestamp:
+tag:
+  name: ''
+  annotations:
+  from:
+    kind: ImageStreamTag
+    namespace: SOURCE
+    name: APP:TAG
+  generation:
+  importPolicy: {}
+  referencePolicy:
+    type: Source
+generation: 0
+lookupPolicy:
+  local: false
+image:
+  metadata:
+    creationTimestamp:
+  dockerImageMetadata:
+  dockerImageLayers:

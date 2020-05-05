@@ -1,0 +1,5 @@
+#DOESN'T WORK YET - Needs more research
+- name: Create imagestream definition using Jinja2 templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'imagestream.j2') }}"

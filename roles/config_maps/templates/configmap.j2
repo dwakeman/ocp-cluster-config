@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{config_map_name}}
+  namespace: {{config_map_namespace}}
+  labels:
+    built_by : {{config_map_built_by}}
+    creator : {{config_map_creator}}
+data:
+{% for item in config_map_properties.values() %}
+  {{ item.name }}: {{ item.value }}
+{% endfor %}

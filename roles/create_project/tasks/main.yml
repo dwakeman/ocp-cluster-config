@@ -1,0 +1,10 @@
+- name: Create OpenShift projects (aka namespaces)
+  k8s:
+    name: "{{project_name}}"
+    kind: Namespace
+    state: present
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result

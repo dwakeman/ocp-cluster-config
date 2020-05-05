@@ -1,0 +1,5 @@
+- name: Configure Service Mesh Operator Control Plane
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'servicemesh-control-plane.j2') }}"
+  register: result

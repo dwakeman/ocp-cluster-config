@@ -1,0 +1,15 @@
+---
+# The main playbook for running the cluster configuration
+# It will include sub-playbooks through the roles that
+# are listed. Each role must define a tasks/main.yml file
+# that will be executed
+- hosts: localhost
+# Localhost is used as the host because Ansible
+# will make the connection through the k8s module
+# to the OpenShift API server rather than to a host
+# itself through SSH
+  roles:
+    - create_project
+    - config_maps
+    - resource_quotas
+#    - image_streams - DOESN'T WORK YET, NEEDS MORE RESEARCH

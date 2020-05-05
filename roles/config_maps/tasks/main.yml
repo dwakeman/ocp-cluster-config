@@ -1,0 +1,19 @@
+# Creates configmap resource definition on the OpenShift
+# cluster based on the template. Variables can be passed
+# to the template to define what specifically gets built
+- name: Create ConfigMap definition using Jinja2 templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'configmap.j2') }}"
+# TODO - improve where the variables come from. This is just meant to
+# be an example of how to use variables in a template
+  vars:
+    config_map_name: ansible-configmap
+    config_map_namespace: ryan-ansible
+    config_map_properties:
+      property.1:
+        name: property.1
+        value: hi
+      property.2:
+        name: property.2
+        value: ryan

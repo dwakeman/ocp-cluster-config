@@ -1,0 +1,12 @@
+- name: Get a list of all pods from any namespace
+  k8s_info:
+    kind: Pod
+    api_key: "{{openshift_api_key}}"
+    host: "{{openshift_host}}"
+    namespace: openshift-image-registry
+  register: pod_list
+
+- name: "Go through the list of pods and print out the names"
+  debug:
+    msg: "Pod name: {{ item.name }} in namespace {{ item.namespace }}"
+  loop: "{{ pod_list | json_query('resources[*].metadata') }}"

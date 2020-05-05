@@ -1,0 +1,9 @@
+- name: Create configmap for IBM Cloud Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'operator-configmap.j2') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result
