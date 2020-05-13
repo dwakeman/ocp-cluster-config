@@ -13,3 +13,47 @@
     - config_maps
     - resource_quotas
 #    - image_streams - DOESN'T WORK YET, NEEDS MORE RESEARCH
+
+
+# Configuration tasks needed to finalize the cluster config after provisioning
+#
+# - Enable private endpoints or disable public one, or both
+# - Enable Key Protect
+# - Enable Logging to LogDNA
+# - Enable Monitoring to SysDig
+# - Patch the developer catalog to have the service tiles removed ******
+# - HPA with custom metrics *****
+# - Enable Kube API audit logging to LogDNA (if needed)
+# - install and configure IBM Cloud Operator
+#   - install the operator (assume manual update)
+#   - create a new namespace called "ico-management" that will contain the secrets and configmaps for each team
+#   - Update the operator when a new version is available
+# - Install and configure Service Mesh
+# - Enable Container Image Security Enforcement: 
+#   - Whitelisted Registries: https://cloud.ibm.com/docs/Registry?topic=registry-security_enforce#cluster-wide
+
+
+# Configuration tasks for onboarding a new application team
+#
+# These tasks are needed in IBM Cloud
+# - Create a resource group for the team
+# - Create an IAM Access Group for the team
+# - Create access policies in the access group as appropriate:
+#   - permission to provision the approved services in the resource group
+#   - permission to the appropriate private catalog
+#   - viewer platform role to the resource group for the cluster
+#   - Viewer platform role for the cluster itself (to see the cluster in the IBM Cloud Console)
+#   - Writer service role on the cluster, scoped to the team namespace
+# - Create a Service ID and API Key for the IBM Cloud Operator to use
+# - Add the Service ID to the team IAM Access Group
+# - Create a new namespace for the team
+# - Add resource quotas for the namespace, if needed
+# - Configure the IBM Cloud Operator in the team namespace
+#   - Create a configmap in the team namespace named <team-namespace>-ibm-cloud-operator
+#     - data:    namespace: ico-management
+#   - Create a secret in the ico-management namespace called <team-namespace>-secret-ibm-cloud-operator
+#   - Create a configmap in the ico-management namespace called <team-namespace>-config-ibm-cloud-operator
+# - Add project to Service Mesh member roll
+# - Create any other Istio-related resources that Platform Admin wants to require.
+# - Create routes for application?  Not sure if this happens right away or later as a separate playbook
+

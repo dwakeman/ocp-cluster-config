@@ -1,0 +1,12 @@
+- name: Disable the samples in the Developer Catalog
+  k8s:
+    api_version: samples.operator.openshift.io/v1
+    kind: Config
+    name: cluster
+    definition: "{{ lookup('file', 'disable_catalog.yml') }}"
+    merge_type: merge
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
