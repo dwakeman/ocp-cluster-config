@@ -1,3 +1,3 @@
-operatorNamespace: dave-app
+operatorNamespace: openshift-operators
 managementNamespace: ico-management
 config_map_creator: "Dave Wakeman"

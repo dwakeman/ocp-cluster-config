@@ -1,0 +1,13 @@
+- name: Approve the update of a new version of the IBM Cloud Opoerator
+  k8s:
+    api_version: operators.coreos.com/v1alpha1
+    kind: InstallPlan
+    name: install-gwnl4
+    namespace: openshift-operators
+    definition: "{{ lookup('file', 'approve_update.yml') }}"
+    merge_type: merge
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  

@@ -56,4 +56,6 @@
 # - Add project to Service Mesh member roll
 # - Create any other Istio-related resources that Platform Admin wants to require.
 # - Create routes for application?  Not sure if this happens right away or later as a separate playbook
+# - Create Service Credentials for Event Streams Enterprise.  Scope it to wildcards for that team.
+# - Create a secret in the team namespace that would be the equivalent to what the operator would do for a binding object
 
