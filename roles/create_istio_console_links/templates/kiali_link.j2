@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: kiali-istio
+spec:
+  href: 'https://{{ kialiRoute }}'
+  location: ApplicationMenu
+  text: Kiali Dashboard
+  applicationMenu:
+    imageURL: 'https://kiali-istio-system.{{ ingressSubdomain }}/kiali_icon_lightbkg_16px.png'
+    section: Istio

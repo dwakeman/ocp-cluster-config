@@ -1,0 +1,8 @@
+- name: Create Resource Group
+  ibm_resource_group:
+    name: "{{project_name}}-{{cluster_env}}-{{app_env}}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result

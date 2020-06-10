@@ -1,0 +1,56 @@
+#- name: Create Resource Group
+#  ibm_resource_group:
+#    name: "{{project_name}}-{{cluster_env}}-{{app_env}}"
+#    state: absent
+#  register: resource_group_result
+
+#- name: Print out the result
+#  debug:
+#    var: resource_group_result
+
+- name: Get Resource Group
+  ibm_resource_group_info:
+    name: "{{project_name}}-{{cluster_env}}-{{app_env}}"
+    is_default: null
+  register: resource_group_info_result
+
+- name: Set the resource group id
+  set_fact:
+    resourceGroupId: "{{ resource_group_info_result.resource.id  }}"
+
+- name: Print out the resource group id
+  debug:
+    var: resourceGroupId
+
+- name: Create IAM Access Group
+  ibm_iam_access_group:
+    name: "{{project_name}}-{{cluster_env}}-developers"
+    description: "Access for developers of {{project_name}}"
+    state: absent
+  register: access_group_result
+
+- name: Print out the result
+  debug:
+    var: access_group_result
+
+- name: get IAM Access Group
+  ibm_iam_access_group_info:
+    access_group_name: "{{project_name}}-{{cluster_env}}-developers"
+  register: access_group_info_result
+
+- name: Set the Access Group access_group_id
+  set_fact:
+    accessGroupId: "{{ access_group_info_result.resource.id  }}"
+
+- name: Print out the accessGroupId
+  debug:
+    var: accessGroupId
+
+- name: Create Access Policy
+  ibm_iam_access_group_policy:
+    access_group_id: accessGroupId
+    roles: ["Reader"]
+    account_management: null
+    resources: 
+    - resource_group_id: "{{ resourceGroupId }}"
+    

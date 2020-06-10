@@ -1,0 +1,9 @@
+- name: Create Logging ConsoleLink using Jinja2 templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'logging_link.j2') }}"
+
+- name: Create Monitoring ConsoleLink using Jinja2 templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'monitoring_link.j2') }}"

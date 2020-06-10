@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: grafana-istio
+spec:
+  href: 'https://{{ grafanaRoute }}'
+  location: ApplicationMenu
+  text: Grafana Dashboard
+  applicationMenu:
+    imageURL: 'https://grafana-istio-system.{{ ingressSubdomain }}/public/img/fav32.png'
+    section: Istio

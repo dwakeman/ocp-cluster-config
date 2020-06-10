@@ -1,0 +1,60 @@
+- name: Get a list of all routes in istio-system namespace
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    namespace: istio-system
+  register: route_list
+
+- name: Print out the result
+  debug:
+    var: route_list
+
+- name: Get the Kiali Route
+  set_fact:
+    kialiRoute:  "{{ item.spec.host  }}"
+    ingressSubdomain: "{{ item.status.ingress[0].routerCanonicalHostname }}"
+  with_items: "{{ route_list.resources }}"
+  when: '"kiali" in item.metadata.name'
+
+- name: Print out the ingressSubdomain
+  debug:
+    var: ingressSubdomain
+
+- name: Print out the kialiRoute
+  debug:
+    var: kialiRoute
+
+- name: Get the Jaeger Route
+  set_fact:
+    jaegerRoute:  "{{ item.spec.host  }}"
+  with_items: "{{ route_list.resources }}"
+  when: '"jaeger" in item.metadata.name'
+
+- name: Print out the jaegerRoute
+  debug:
+    var: jaegerRoute
+
+- name: Get the Grafana Route
+  set_fact:
+    grafanaRoute:  "{{ item.spec.host  }}"
+  with_items: "{{ route_list.resources }}"
+  when: '"grafana" in item.metadata.name'
+
+- name: Print out the grafanaRoute
+  debug:
+    var: grafanaRoute
+
+- name: Create Jaeger ConsoleLink using Jinja2 templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'jaeger_link.j2') }}"
+
+- name: Create Kiali ConsoleLink using Jinja2 templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'kiali_link.j2') }}"
+
+- name: Create Grafana ConsoleLink using Jinja2 templating
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'grafana_link.j2') }}"

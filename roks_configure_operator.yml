@@ -4,10 +4,14 @@
 # are listed. Each role must define a tasks/main.yml file
 # that will be executed
 - hosts: localhost
+
+  vars:
+    project_name: "ico-management"
 # Just a single role is defined now to show how it can be done
 # we may want to consider breaking up this one ansible project
 # into two with one for doing cluster configuration and one for
 # gathering info. I'm not sure which makes more sense at this
 # point.
   roles:
+    - create_project
     - configure_ico

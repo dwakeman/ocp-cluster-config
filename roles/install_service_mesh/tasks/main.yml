@@ -40,7 +40,7 @@
 
 - name: Pause for installations to start
   pause:
-    seconds: 30
+    seconds: "60"
     
 - name: Get a list of all CSVs from any namespace
   k8s_info:

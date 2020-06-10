@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: logdna
+spec:
+  href: {{ logdna_url }}
+  location: ApplicationMenu
+  text: All Application Logs in LogDNA
+  applicationMenu:
+    imageURL: 'https://app.us-south.logging.cloud.ibm.com/img/favicon-32x32.png'
+    section: IBM Cloud Services

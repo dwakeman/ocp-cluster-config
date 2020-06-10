@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: jaeger-istio
+spec:
+  href: 'https://{{ jaegerRoute }}'
+  location: ApplicationMenu
+  text: Jaeger Dashboard
+  applicationMenu:
+    imageURL: 'https://jaeger-istio-system.{{ ingressSubdomain }}/favicon.ico'
+    section: Istio

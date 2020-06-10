@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: sysdig
+spec:
+  href: {{ sysdig_url }}
+  location: ApplicationMenu
+  text: SysDig Cluster Overview
+  applicationMenu:
+    imageURL: 'https://us-south.monitoring.cloud.ibm.com/images/favicon-monitor.ico'
+    section: IBM Cloud Services

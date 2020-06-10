@@ -1,0 +1,25 @@
+---
+- name: Create Resource Group
+  hosts: localhost
+  collections:
+   - ibmcloud.ibmcollection
+
+  vars:
+    project_name: roder-app
+    cluster_env: engineering
+    app_env: dev
+
+
+#  tasks:
+#    - name: Create Resource Group
+#      ibm_resource_group:
+#        name: "{{project_name}}-{{cluster_env}}"
+#      register: result
+#
+#    - name: Print out the result
+#      debug:
+#        var: result
+
+  roles:
+  #  - create_project
+    - setup_app_team_security

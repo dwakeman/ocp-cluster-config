@@ -1,5 +1,20 @@
+- name: Create OpenShift projects (aka namespaces)
+  k8s:
+    name: "istio-system"
+    kind: Namespace
+    state: present
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result
+
 - name: Configure Service Mesh Operator Control Plane
   k8s:
     state: present
     definition: "{{ lookup('template', 'servicemesh-control-plane.j2') }}"
   register: result
+
+- name: Print out the result
+  debug:
+    var: result

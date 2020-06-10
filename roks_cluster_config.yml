@@ -8,11 +8,31 @@
 # will make the connection through the k8s module
 # to the OpenShift API server rather than to a host
 # itself through SSH
+
+  vars:
+    project_name: "ico_management"
+    logdna_url: 'https://app.us-south.logging.cloud.ibm.com/ce51b4c459/logs/view'
+    sysdig_url: 'https://us-south.monitoring.cloud.ibm.com/#/dashboards/80073/l:3600?scope=kubernetes.cluster.name%20in%20(%22sandbox-ocp-01%22)'
+
+
   roles:
-    - create_project
-    - config_maps
-    - resource_quotas
-#    - image_streams - DOESN'T WORK YET, NEEDS MORE RESEARCH
+    - create_console_links
+    - install_ico
+    - configure_ico
+    - disable_developer_catalog
+    - install_service_mesh
+    - configure_service_mesh_control_plane
+    - create_istio_console_links
+    
+
+
+
+
+
+
+
+
+
 
 
 # Configuration tasks needed to finalize the cluster config after provisioning

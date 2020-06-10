@@ -1,3 +1,15 @@
+
+- name: Create OpenShift projects (aka namespaces)
+  k8s:
+    name: "ico-management"
+    kind: Namespace
+    state: present
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result
+
 - name: Install IBM Cloud Operator
   k8s:
     state: present

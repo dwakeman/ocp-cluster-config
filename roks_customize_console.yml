@@ -1,0 +1,18 @@
+# The main playbook for running the cluster configuration
+# It will include sub-playbooks through the roles that
+# are listed. Each role must define a tasks/main.yml file
+# that will be executed
+- hosts: localhost
+# Localhost is used as the host because Ansible
+# will make the connection through the k8s module
+# to the OpenShift API server rather than to a host
+# itself through SSH
+  
+  vars:
+    logdna_url: 'https://app.us-south.logging.cloud.ibm.com/ce51b4c459/logs/view'
+    sysdig_url: 'https://us-south.monitoring.cloud.ibm.com/#/dashboards/83025/l:3600?scope=kubernetes.cluster.name%20in%20(%22nonprod-ocp-01%22)'
+
+    
+  roles:
+    - create_console_links
+    - create_istio_console_links
