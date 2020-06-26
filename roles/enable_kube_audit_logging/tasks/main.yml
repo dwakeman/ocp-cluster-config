@@ -1,0 +1,9 @@
+- name: Enable Kube Audit Logging
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'ibmcloud-kube-audit.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  

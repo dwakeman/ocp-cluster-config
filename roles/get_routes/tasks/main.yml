@@ -1,0 +1,83 @@
+---
+- name: Wait until Grafana route exists
+  ignore_errors: yes
+  command:  oc get route.route.openshift.io/grafana -n istio-system -o jsonpath --template='{$.status.ingress[0].conditions[0].status}'
+  register: grafanaStatus
+  retries: 3
+  delay: 10
+  until: grafanaStatus.stdout == "True"
+
+- name: Get the grafana route object
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: grafana
+    namespace: istio-system
+  register: grafanaRouteObject
+
+
+- name: Get the Grafana Route host
+  set_fact:
+    grafanaRoute:  "{{ grafanaRouteObject.resources[0].spec.host  }}"
+    ingressSubdomain: "{{ grafanaRouteObject.resources[0].status.ingress[0].routerCanonicalHostname }}"
+ 
+- name: Print out the ingressSubdomain
+  debug:
+    var: ingressSubdomain
+
+- name: Print out the Grafana Route
+  debug:
+    var: grafanaRoute
+
+
+
+- name: Wait until Kiali route exists
+  ignore_errors: yes
+  command:  oc get route.route.openshift.io/kiali -n istio-system -o jsonpath --template='{$.status.ingress[0].conditions[0].status}'
+  register: kialiStatus
+  retries: 3
+  delay: 10
+  until: kialiStatus.stdout == "True"
+
+- name: Get the kiali route object
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: kiali
+    namespace: istio-system
+  register: kialiRouteObject
+
+
+- name: Get the Kiali Route host
+  set_fact:
+    kialiRoute:  "{{ kialiRouteObject.resources[0].spec.host  }}"
+
+- name: Print out the Kiali Route
+  debug:
+    var: kialiRoute
+
+
+- name: Wait until Jaeger route exists
+  ignore_errors: yes
+  command:  oc get route.route.openshift.io/jaeger -n istio-system -o jsonpath --template='{$.status.ingress[0].conditions[0].status}'
+  register: jaegerStatus
+  retries: 3
+  delay: 10
+  until: jaegerStatus.stdout == "True"
+
+- name: Get the jaeger route object
+  k8s_info:
+    api_version: route.openshift.io/v1
+    kind: Route
+    name: jaeger
+    namespace: istio-system
+  register: jaegerRouteObject
+
+
+- name: Get the Jaeger Route host
+  set_fact:
+    jaegerRoute:  "{{ jaegerRouteObject.resources[0].spec.host  }}"
+
+- name: Print out the Jaeger Route
+  debug:
+    var: jaegerRoute

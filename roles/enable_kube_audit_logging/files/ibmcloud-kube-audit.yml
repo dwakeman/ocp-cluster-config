@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: List
+metadata:
+ name: ibmcloud-kube-audit
+items:
+ - apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: ibmcloud-kube-audit
+     namespace: default
+     labels:
+       app: ibmcloud-kube-audit
+   spec:
+     replicas: 1
+     selector:
+       matchLabels:
+         app: ibmcloud-kube-audit
+     template:
+       metadata:
+         labels:
+           app: ibmcloud-kube-audit
+       spec:
+         containers:
+           - name: ibmcloud-kube-audit
+             image: 'icr.io/ibm/ibmcloud-kube-audit-to-logdna:latest'
+             ports:
+               - containerPort: 3000
+ - apiVersion: v1
+   kind: Service
+   metadata:
+     name: ibmcloud-kube-audit-service
+     namespace: default
+     labels:
+       app: ibmcloud-kube-audit
+   spec:
+     selector:
+       app: ibmcloud-kube-audit
+     ports:
+       - protocol: TCP
+         port: 80
+         targetPort: 3000
+     type: ClusterIP
