@@ -17,6 +17,7 @@
 
   roles:
     - create_console_links
+    - create_custom_logo
     - install_ico
     - configure_ico
     - disable_developer_catalog

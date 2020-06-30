@@ -1,0 +1,22 @@
+- name: Create configmap with custom logo
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'console_custom_logo.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Update the Console Config
+  k8s:
+    api_version: operator.openshift.io/v1
+    kind: Console
+    name: cluster
+    definition: "{{ lookup('file', 'console.yml') }}"
+    merge_type: merge
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  

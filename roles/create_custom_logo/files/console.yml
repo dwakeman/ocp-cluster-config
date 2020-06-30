@@ -1,0 +1,5 @@
+spec:
+  customization:
+    customLogoFile:
+      key: ocp-ibm-logo.png
+      name: console-custom-logo
