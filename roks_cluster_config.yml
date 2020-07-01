@@ -12,7 +12,7 @@
   vars:
     project_name: "ico_management"
     logdna_url: 'https://app.us-south.logging.cloud.ibm.com/ce51b4c459/logs/view'
-    sysdig_url: 'https://us-south.monitoring.cloud.ibm.com/#/dashboards/83025/l:3600?scope=kubernetes.cluster.name%20in%20(%22nonprod-ocp-01%22)'
+    sysdig_url: 'https://us-south.monitoring.cloud.ibm.com/#/overview/5712?scope=kubernetes.cluster.name%20as%20%22Cluster%22%20%3D%20%3F'
 
 
   roles:

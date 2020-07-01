@@ -1,0 +1,15 @@
+apiVersion: logging.openshift.io/v1alpha1
+kind: LogForwarding
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+    - endpoint: '{{ log_forwarding_host }}:{{ log_forwarding_port}}'
+      name: insecureforward
+      type: forward
+  pipelines:
+    - inputSource: logs.app
+      name: container-logs
+      outputRefs:
+        - insecureforward

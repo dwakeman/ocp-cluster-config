@@ -1,0 +1,131 @@
+- name: Create openshift-logging namespace
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'logging_namespace.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Create openshift-operators-redhat namespace
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'openshift_operators_redhat.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Create Operator Group for ElasticSearch Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'eo_og.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Create subscription for ElasticSearch Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'eo_subscription.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Create role to grant Prometheus permission to openshift-operators-redhat namespace 
+  k8s:
+    state: present
+    namespace: openshift-operators-redhat
+    definition: "{{ lookup('file', 'eo_rbac.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Create Operator Group for Cluster Logging Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'clo_og.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Create subscription for Cluster Logging Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'clo_subscription.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result  
+
+- name: Pause for installations to start
+  pause:
+    seconds: "15"
+    
+- name: Get a list of all CSVs from any namespace
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: ClusterServiceVersion
+    namespace: openshift-logging
+  register: csv_list
+
+- name: Print out the result
+  debug:
+    var: csv_list
+
+- name: Get the Cluster Logging Operator CSV Name
+  set_fact:
+    clusterloggingCsvName:  "{{ item.metadata.name  }}"
+  with_items: "{{ csv_list.resources }}"
+  when: '"clusterlogging" in item.metadata.name'
+
+- name: Print out the result
+  debug:
+    var: clusterloggingCsvName
+
+- name: Wait until CSV is Installed
+  ignore_errors: yes
+  command: oc get csv {{clusterloggingCsvName|quote}} -o jsonpath --template='{$.status.phase}' -n openshift-logging
+  register: csv
+  retries: 30
+  delay: 10
+  until: csv.stdout == "Succeeded"
+
+- name: Print out the result
+  debug:
+    var: csv
+
+- name: Create ClusterLogging API for Cluster Logging Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('file', 'clusterlogging.yml') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result
+
+# NOTE:  For next step, make sure to set the following variables:
+#        log_forwarding_host - the host name or IP address of the LogStash server
+#        log_forwarding_port - the port where LogStash is listening (4000 is the default for FluentD input plugin)
+
+- name: Create Log Forwarding API for Cluster Logging Operator
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'logforwarding.j2') }}"
+  register: result
+
+- name: Print out the result
+  debug:
+    var: result
