@@ -17,6 +17,11 @@
 #    log_forwarding_host - the URL of the external server where logs will be forwarded
 #    log_forwarding_port - the port on which the server is listening for FluentD traffic  
 #
+# Note: Testing showed that ElasticSearch would not run if the nodes had less than 32GB
+#       RAM.  The pods would fail with a vm.max_map_count too low error.  This playbook
+#       does not configure ElasticSearch, but if you update the playbook to include it 
+#       be sure that your nodes have at least 32GB of RAM.
+#
 #########################################################################################
 
 - name: Create openshift-logging namespace
