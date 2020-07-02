@@ -1,48 +1,28 @@
+#########################################################################################
+#
+# This playbook is specific for a log forwarding only scneario where the internal
+# ElasticSearch and Kibana components are not needed.  It does not install the
+# ElasticSearch Operator.  Steps are based on OpenShift documentation.
+#
+# https://docs.openshift.com/container-platform/4.3/logging/cluster-logging-deploying.html
+# https://docs.openshift.com/container-platform/4.3/logging/config/cluster-logging-external.html
+#
+#  Actions:
+#    - Create the openshift-logging namespace for the Cluster Logging operator
+#    - Install the Cluster Logging operator by creating a Subscription
+#    - Create the ClusterLogging custom resource
+#    - Create the LogForwarding custom resource
+#
+#  Variables:
+#    log_forwarding_host - the URL of the external server where logs will be forwarded
+#    log_forwarding_port - the port on which the server is listening for FluentD traffic  
+#
+#########################################################################################
+
 - name: Create openshift-logging namespace
   k8s:
     state: present
     definition: "{{ lookup('file', 'logging_namespace.yml') }}"
-  register: result
-
-- name: Print out the result
-  debug:
-    var: result  
-
-- name: Create openshift-operators-redhat namespace
-  k8s:
-    state: present
-    definition: "{{ lookup('file', 'openshift_operators_redhat.yml') }}"
-  register: result
-
-- name: Print out the result
-  debug:
-    var: result  
-
-- name: Create Operator Group for ElasticSearch Operator
-  k8s:
-    state: present
-    definition: "{{ lookup('file', 'eo_og.yml') }}"
-  register: result
-
-- name: Print out the result
-  debug:
-    var: result  
-
-- name: Create subscription for ElasticSearch Operator
-  k8s:
-    state: present
-    definition: "{{ lookup('file', 'eo_subscription.yml') }}"
-  register: result
-
-- name: Print out the result
-  debug:
-    var: result  
-
-- name: Create role to grant Prometheus permission to openshift-operators-redhat namespace 
-  k8s:
-    state: present
-    namespace: openshift-operators-redhat
-    definition: "{{ lookup('file', 'eo_rbac.yml') }}"
   register: result
 
 - name: Print out the result

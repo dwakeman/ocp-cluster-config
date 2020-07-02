@@ -4,6 +4,7 @@ metadata:
   name: instance
   namespace: openshift-logging
 spec:
+  disableDefaultForwarding: true
   outputs:
     - endpoint: '{{ log_forwarding_host }}:{{ log_forwarding_port}}'
       name: insecureforward

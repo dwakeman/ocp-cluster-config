@@ -11,7 +11,7 @@
 # point.
 
   vars:
-    log_forwarding_host: "52.116.129.80"
+    log_forwarding_host: "10.1.112.6"
     log_forwarding_port: 4000
 
   roles:

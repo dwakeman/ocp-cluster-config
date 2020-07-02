@@ -10,7 +10,7 @@ spec:
   logStore:
     type: elasticsearch
     elasticsearch:
-      nodeCount: 1
+      nodeCount: 0
       redundancyPolicy: ZeroRedundancy
       resources:
         limits:

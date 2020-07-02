@@ -13,7 +13,8 @@
     project_name: "ico_management"
     logdna_url: 'https://app.us-south.logging.cloud.ibm.com/ce51b4c459/logs/view'
     sysdig_url: 'https://us-south.monitoring.cloud.ibm.com/#/overview/5712?scope=kubernetes.cluster.name%20as%20%22Cluster%22%20%3D%20%3F'
-
+    log_forwarding_host: "10.1.112.6"
+    log_forwarding_port: 4000
 
   roles:
     - create_console_links
@@ -25,6 +26,7 @@
     - configure_service_mesh_control_plane
     - create_istio_console_links
     - enable_kube_audit_logging
+  #  - enable_cluster_logging
     
 
 
