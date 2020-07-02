@@ -10,25 +10,18 @@ spec:
   logStore:
     type: elasticsearch
     elasticsearch:
+      # no elasticsearch pods
       nodeCount: 0
-      redundancyPolicy: ZeroRedundancy
-      resources:
-        limits:
-          memory: 768Mi
-        requests:
-          cpu: 200m
-          memory: 768Mi
-      storage:
-        storageClassName: ibmc-vpc-block-general-purpose
-        size: 20G
   visualization:
     type: kibana
     kibana:
+      # no kibana pods
       replicas: 0
   curation:
     type: curator
     curator:
-      schedule: 30 3 * * *
+      # schedule the cron job to never run curator
+      schedule: "* * 31 2 *"
   collection:
     logs:
       type: fluentd
