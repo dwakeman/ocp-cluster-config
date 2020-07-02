@@ -26,7 +26,7 @@
     - configure_service_mesh_control_plane
     - create_istio_console_links
     - enable_kube_audit_logging
-  #  - enable_cluster_logging
+    - enable_cluster_logging
     
 
 
